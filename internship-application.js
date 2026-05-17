@@ -1,9 +1,37 @@
+function getSelectedInternshipAreas() {
+  return Array.from(document.querySelectorAll('input[name="internshipArea"]:checked')).map(
+    (checkbox) => checkbox.value
+  );
+}
+
+function setInternshipAreaError(show) {
+  const options = document.getElementById("internshipAreaOptions");
+  const error = document.getElementById("internshipAreaError");
+  options.classList.toggle("is-invalid", show);
+  error.hidden = !show;
+}
+
+document.querySelectorAll('input[name="internshipArea"]').forEach((checkbox) => {
+  checkbox.addEventListener("change", () => {
+    if (getSelectedInternshipAreas().length > 0) {
+      setInternshipAreaError(false);
+    }
+  });
+});
+
 document.getElementById("internshipApplicationForm").addEventListener("submit", async function (e) {
   e.preventDefault();
 
   const form = document.getElementById("internshipApplicationForm");
   const thankYouScreen = document.getElementById("thankYouScreen");
   const submitButton = form.querySelector("button[type='submit']");
+
+  const internshipAreas = getSelectedInternshipAreas();
+  if (internshipAreas.length === 0) {
+    setInternshipAreaError(true);
+    document.getElementById("internshipAreaGroup").scrollIntoView({ behavior: "smooth", block: "center" });
+    return;
+  }
 
   const flowUrl =
     "https://defaultdf0fc509acb44023b500fdf382dde4.30.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/647f954dcd68454ea4e0b11ac3bd37a6/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=iu3hOjM9jFItmu5-q2s4dKKAV0zg0K3o3h8HgIBbito";
@@ -34,9 +62,11 @@ document.getElementById("internshipApplicationForm").addEventListener("submit", 
     studentId: document.getElementById("studentId").value.trim(),
     faculty: document.getElementById("faculty").value.trim(),
     gpa: document.getElementById("gpa").value,
+    creditsCompleted: document.getElementById("creditsCompleted").value,
+    degreeDuration: document.getElementById("degreeDuration").value,
     phone: document.getElementById("phone").value.trim(),
     willingTwoMonths: document.getElementById("willingTwoMonths").value,
-    internshipArea: document.getElementById("internshipArea").value,
+    internshipArea: internshipAreas,
     transcript: await fileToBase64("transcriptAttachment"),
     video: await fileToBase64("internshipVideo")
   };

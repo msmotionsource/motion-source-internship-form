@@ -45,7 +45,7 @@
                 </div>
                 <div class="row">
                   <div class="col-md-6 mb-3">
-                    <label class="form-label" for="faculty">Faculty</label>
+                    <label class="form-label" for="faculty">Major/Bachelor's Program</label>
                     <input type="text" id="faculty" name="faculty" required class="form-control" />
                   </div>
                   <div class="col-md-6 mb-3">
@@ -63,6 +63,16 @@
                     <input type="tel" id="phone" name="phone" class="form-control" />
                   </div>
                 </div>
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label" for="gpa">Credits Completed</label>
+                    <input type="number" step="1" min="0" max="320" id="gpa" name="creditsCompleted" required class="form-control" />
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label" for="phone">Degree Duration</label>
+                    <input type="tel" id="phone" name="degreeDuration" class="form-control" />
+                  </div>
+                </div>
 
                 <div class="ms-section-title">Internship Details</div>
                 <div class="mb-3">
@@ -76,14 +86,31 @@
                   </select>
                 </div>
                 <div class="mb-3">
-                  <label class="form-label" for="internshipArea">Internship you are applying for:</label>
-                  <select id="internshipArea" name="internshipArea" required class="form-select">
-                    <option value="">Select an option</option>
-                    <option value="Software Development">Dynamics 365 Developer Internship</option>
-                    <option value="Data Analysis">Dynamics 365 Business Central Development Internship</option>
-                    <option value="Marketing">Web Development Internship</option>
-                    <option value="Design">Data Analytics/Power BI Internship</option>
-                  </select>
+                  <fieldset class="ms-internship-fieldset" id="internshipAreaGroup">
+                    <legend class="form-label">Internship you are applying for:</legend>
+                    <p class="form-text text-muted mb-3">Select all that apply.</p>
+                    <div class="ms-internship-options" id="internshipAreaOptions">
+                      <label class="ms-internship-option">
+                        <input type="checkbox" name="internshipArea" value="Software Development" class="form-check-input" />
+                        <span class="ms-internship-option-label">Dynamics 365 Developer Internship</span>
+                      </label>
+                      <label class="ms-internship-option">
+                        <input type="checkbox" name="internshipArea" value="Data Analysis" class="form-check-input" />
+                        <span class="ms-internship-option-label">Dynamics 365 Business Central Development Internship</span>
+                      </label>
+                      <label class="ms-internship-option">
+                        <input type="checkbox" name="internshipArea" value="Marketing" class="form-check-input" />
+                        <span class="ms-internship-option-label">Web Development Internship</span>
+                      </label>
+                      <label class="ms-internship-option">
+                        <input type="checkbox" name="internshipArea" value="Design" class="form-check-input" />
+                        <span class="ms-internship-option-label">Data Analytics/Power BI Internship</span>
+                      </label>
+                    </div>
+                    <div id="internshipAreaError" class="ms-internship-error" role="alert" hidden>
+                      Please select at least one internship.
+                    </div>
+                  </fieldset>
                 </div>
 
                 <div class="ms-section-title">Attachments</div>
