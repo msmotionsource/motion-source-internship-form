@@ -56,25 +56,25 @@ document.getElementById("internshipApplicationForm").addEventListener("submit", 
     });
   }
 
-  const payload = {
-    fullName: document.getElementById("fullName").value.trim(),
-    email: document.getElementById("email").value.trim(),
-    studentId: document.getElementById("studentId").value.trim(),
-    faculty: document.getElementById("faculty").value.trim(),
-    gpa: document.getElementById("gpa").value,
-    creditsCompleted: document.getElementById("creditsCompleted").value,
-    degreeDuration: document.getElementById("degreeDuration").value,
-    phone: document.getElementById("phone").value.trim(),
-    willingTwoMonths: document.getElementById("willingTwoMonths").value,
-    internshipArea: internshipAreas,
-    transcript: await fileToBase64("transcriptAttachment"),
-    video: await fileToBase64("internshipVideo")
-  };
-
   submitButton.disabled = true;
   submitButton.textContent = "Submitting...";
 
   try {
+    const payload = {
+      fullName: document.getElementById("fullName").value.trim(),
+      email: document.getElementById("email").value.trim(),
+      studentId: document.getElementById("studentId").value.trim(),
+      faculty: document.getElementById("faculty").value.trim(),
+      gpa: document.getElementById("gpa").value,
+      creditsCompleted: document.getElementById("creditsCompleted").value,
+      degreeDuration: document.getElementById("degreeDuration").value.trim(),
+      phone: document.getElementById("phone").value.trim(),
+      willingTwoMonths: document.getElementById("willingTwoMonths").value,
+      internshipArea: internshipAreas,
+      transcript: await fileToBase64("transcriptAttachment"),
+      video: await fileToBase64("internshipVideo")
+    };
+
     const response = await fetch(flowUrl, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -86,13 +86,14 @@ document.getElementById("internshipApplicationForm").addEventListener("submit", 
       thankYouScreen.style.display = "block";
       document.getElementById("formIntroText").style.display = "none";
       window.scrollTo({ top: 0, behavior: "smooth" });
-      // window.location.href = "/thank-you";
     } else {
+      console.error("Submission failed:", response.status, await response.text());
       alert("Something went wrong while submitting your application. Please try again.");
       submitButton.disabled = false;
       submitButton.textContent = "Submit Application";
     }
   } catch (error) {
+    console.error("Submission error:", error);
     alert("Submission failed. Please check your connection and try again.");
     submitButton.disabled = false;
     submitButton.textContent = "Submit Application";
