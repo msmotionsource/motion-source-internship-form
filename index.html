@@ -144,7 +144,11 @@
                 </div>
 
                 <div class="mt-4 text-center">
-                  <button type="submit" class="ms-submit-btn">Submit Application</button>
+                  <button type="submit" class="ms-submit-btn" id="submitApplicationBtn">Submit Application</button>
+                  <div id="submitSpinner" class="ms-submit-spinner" hidden aria-live="polite" aria-busy="true">
+                    <div class="ms-submit-spinner-ring" role="status" aria-hidden="true"></div>
+                    <p class="ms-submit-spinner-text">Your application is being submitted. Please wait.</p>
+                  </div>
                 </div>
               </form>
 

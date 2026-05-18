@@ -11,6 +11,13 @@ function setInternshipAreaError(show) {
   error.hidden = !show;
 }
 
+function setSubmitSpinner(show) {
+  const spinner = document.getElementById("submitSpinner");
+  const submitButton = document.getElementById("submitApplicationBtn");
+  spinner.hidden = !show;
+  submitButton.disabled = show;
+}
+
 document.querySelectorAll('input[name="internshipArea"]').forEach((checkbox) => {
   checkbox.addEventListener("change", () => {
     if (getSelectedInternshipAreas().length > 0) {
@@ -24,7 +31,6 @@ document.getElementById("internshipApplicationForm").addEventListener("submit", 
 
   const form = document.getElementById("internshipApplicationForm");
   const thankYouScreen = document.getElementById("thankYouScreen");
-  const submitButton = form.querySelector("button[type='submit']");
 
   const internshipAreas = getSelectedInternshipAreas();
   if (internshipAreas.length === 0) {
@@ -56,8 +62,7 @@ document.getElementById("internshipApplicationForm").addEventListener("submit", 
     });
   }
 
-  submitButton.disabled = true;
-  submitButton.textContent = "Submitting...";
+  setSubmitSpinner(true);
 
   try {
     const payload = {
@@ -89,13 +94,11 @@ document.getElementById("internshipApplicationForm").addEventListener("submit", 
     } else {
       console.error("Submission failed:", response.status, await response.text());
       alert("Something went wrong while submitting your application. Please try again.");
-      submitButton.disabled = false;
-      submitButton.textContent = "Submit Application";
+      setSubmitSpinner(false);
     }
   } catch (error) {
     console.error("Submission error:", error);
     alert("Submission failed. Please check your connection and try again.");
-    submitButton.disabled = false;
-    submitButton.textContent = "Submit Application";
+    setSubmitSpinner(false);
   }
 });

@@ -94,6 +94,44 @@
   cursor: not-allowed;
 }
 
+.ms-submit-spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  padding: 1.25rem 1.5rem;
+  border-radius: 8px;
+  background: #fff7ed;
+  border: 1px solid #fed7aa;
+}
+
+.ms-submit-spinner[hidden] {
+  display: none;
+}
+
+.ms-submit-spinner-ring {
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 3px solid #fed7aa;
+  border-top-color: #f97316;
+  border-radius: 50%;
+  animation: ms-spin 0.75s linear infinite;
+}
+
+.ms-submit-spinner-text {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #2d2d3a;
+}
+
+@keyframes ms-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .ms-orange-strip {
   height: 4px;
   background: #f97316;
