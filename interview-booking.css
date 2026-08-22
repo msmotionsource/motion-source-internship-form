@@ -1,0 +1,138 @@
+/* Interview booking — slot picker */
+
+.ms-booking-candidate {
+  padding: 0.75rem 1rem;
+  background: #f9fafb;
+  border-radius: 6px;
+  border: 1px solid #e5e7eb;
+  margin-bottom: 1.5rem;
+  color: #2d2d3a;
+}
+
+.ms-booking-message h2 {
+  font-size: 1.35rem;
+  color: #1a1a2e;
+  margin-bottom: 0.75rem;
+}
+
+.ms-booking-message p {
+  color: #5a5a6e;
+}
+
+.ms-booking-confirmed-card {
+  padding: 1rem 1.25rem;
+  background: #fff7ed;
+  border: 1px solid #fed7aa;
+  border-radius: 8px;
+  text-align: left;
+}
+
+.ms-slot-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+
+.ms-slot-date-group {
+  margin-top: 1.25rem;
+}
+
+.ms-slot-date-group:first-child {
+  margin-top: 0;
+}
+
+.ms-slot-date-heading {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin-bottom: 0.5rem;
+}
+
+.ms-slot-option {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0.875rem 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background: #fff;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+}
+
+.ms-slot-option:hover:not(.ms-slot-option--disabled) {
+  border-color: #f97316;
+  background: #fff7ed;
+}
+
+.ms-slot-option:has(.form-check-input:checked) {
+  border-color: #f97316;
+  background: #fff7ed;
+  box-shadow: 0 0 0 0.2rem rgba(249, 115, 22, 0.15);
+}
+
+.ms-slot-option--disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  background: #f9fafb;
+}
+
+.ms-slot-option .form-check-input {
+  flex-shrink: 0;
+  width: 1.1rem;
+  height: 1.1rem;
+  cursor: pointer;
+}
+
+.ms-slot-option--disabled .form-check-input {
+  cursor: not-allowed;
+}
+
+.ms-slot-option .form-check-input:checked {
+  background-color: #f97316;
+  border-color: #f97316;
+}
+
+.ms-slot-option .form-check-input:focus {
+  border-color: #f97316;
+  box-shadow: 0 0 0 0.2rem rgba(249, 115, 22, 0.2);
+}
+
+.ms-slot-option-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.ms-slot-option-title {
+  font-weight: 600;
+  color: #2d2d3a;
+  line-height: 1.4;
+}
+
+.ms-slot-option-meta {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin-top: 0.15rem;
+}
+
+.ms-slot-option-meta-sub {
+  font-size: 0.8125rem;
+  color: #9ca3af;
+  margin-top: 0.2rem;
+  line-height: 1.4;
+}
+
+.ms-slot-list.is-invalid .ms-slot-option:not(.ms-slot-option--disabled) {
+  border-color: #dc3545;
+}
+
+#bookingSpinner[hidden] {
+  display: none;
+}
+
+#loadingScreen .ms-submit-spinner {
+  margin-top: 0;
+}
