@@ -30,10 +30,119 @@
             </div>
             <div class="ms-form-body">
               <h1>Motion Source Fall 2026 Internship Application</h1>
-              <div id="submissionsClosedScreen" class="ms-closed-screen">
-                <h2>Submissions Closed</h2>
-                <p>Thank you for your interest in the Motion Source Fall 2026 Internship Program.</p>
-                <p>Applications are no longer being accepted.</p>
+              <p id="formIntroText">
+                Please complete the application form below. Fields marked as required must be filled before submission.
+              </p>
+              <form id="internshipApplicationForm">
+                <div class="ms-section-title">Personal Information</div>
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label" for="fullName">Full Name</label>
+                    <input type="text" id="fullName" name="fullName" required class="form-control" />
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label" for="email">Email Address</label>
+                    <input type="email" id="email" name="email" required class="form-control" />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label" for="faculty">Major/Bachelor's Program</label>
+                    <input type="text" id="faculty" name="faculty" required class="form-control" />
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label" for="studentId">Student ID</label>
+                    <input type="text" id="studentId" name="studentId" required class="form-control" />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label" for="gpa">GPA</label>
+                    <input type="number" step="0.01" min="0" max="10" id="gpa" name="gpa" required class="form-control" />
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label" for="phone">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" class="form-control" />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label" for="creditsCompleted">Credits Completed</label>
+                    <input type="number" step="1" min="0" max="320" id="creditsCompleted" name="creditsCompleted" required class="form-control" />
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label" for="degreeDuration">Degree Duration</label>
+                    <input type="text" id="degreeDuration" name="degreeDuration" class="form-control" />
+                  </div>
+                </div>
+
+                <div class="ms-section-title">Internship Details</div>
+                <div class="mb-3">
+                  <label class="form-label" for="willingTwoMonths">
+                    Are you willing to commit to working from 12:00 PM to 8:00 PM (12:00–20:00) CET?
+                  </label>
+                  <select id="willingTwoMonths" name="willingTwoMonths" required class="form-select">
+                    <option value="">Select an option</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                  </select>
+                </div>
+                <div class="mb-3">
+                  <fieldset class="ms-internship-fieldset" id="internshipAreaGroup">
+                    <legend class="form-label">Internship you are applying for:</legend>
+                    <div class="ms-internship-options" id="internshipAreaOptions">
+                      <label class="ms-internship-option">
+                        <input type="checkbox" name="internshipArea" value="Dynamics 365 Business Central Development Internship" class="form-check-input" />
+                        <span class="ms-internship-option-label">Dynamics 365 Business Central Development Internship</span>
+                      </label>
+                    </div>
+                    <div id="internshipAreaError" class="ms-internship-error" role="alert" hidden>
+                      Please select at least one internship.
+                    </div>
+                  </fieldset>
+                </div>
+
+                <div class="ms-section-title">Attachments</div>
+                <div class="mb-3">
+                  <label class="form-label" for="transcriptAttachment">
+                    Please upload your Transcript of Records / list of completed exams and grades here:
+                  </label>
+                  <p class="form-text text-muted">Please attach a .pdf file.</p>
+                  <input type="file" id="transcriptAttachment" name="transcriptAttachment" accept=".pdf,application/pdf" required class="form-control" />
+                </div>
+                <div class="mb-3">
+                  <label class="form-label" for="internshipVideo">Video Introduction</label>
+                  <p class="form-text text-muted">Please upload a 30–90 second video (in English) telling us:</p>
+                  <ul class="form-text text-muted">
+                    <li>why you would like to get the internship at Motion Source</li>
+                    <li>what you expect from the internship</li>
+                    <li>what excites you most about the opportunity</li>
+                    <li>what you hope to learn during the internship</li>
+                  </ul>
+                  <p class="form-text text-muted">Please attach an .mp4 file (maximum file size: 50 MB).</p>
+                  <input
+                    type="file"
+                    id="internshipVideo"
+                    name="internshipVideo"
+                    accept=".mp4,video/mp4"
+                    required
+                    class="form-control"
+                  />
+                </div>
+
+                <div class="mt-4 text-center">
+                  <button type="submit" class="ms-submit-btn" id="submitApplicationBtn">Submit Application</button>
+                  <div id="submitSpinner" class="ms-submit-spinner" hidden aria-live="polite" aria-busy="true">
+                    <div class="ms-submit-spinner-ring" role="status" aria-hidden="true"></div>
+                    <p class="ms-submit-spinner-text">Your application is being submitted. Please wait.</p>
+                  </div>
+                </div>
+              </form>
+
+              <div id="thankYouScreen" style="display: none; text-align: center; padding: 40px;">
+                <h2>Thank you for your application!</h2>
+                <p>Your internship application has been submitted successfully.</p>
+                <p>We will review your information and contact you soon.</p>
               </div>
             </div>
             <div class="ms-orange-strip"></div>
@@ -42,5 +151,7 @@
         </div>
       </div>
     </div>
+
+    <script src="internship-application.js"></script>
   </body>
 </html>

@@ -92,19 +92,13 @@
   color: #6b7280;
   background: #f9fafb;
 }
-#thankYouScreen h2,
-.ms-closed-screen h2 {
+#thankYouScreen h2 {
   color: #1a1a2e;
   margin-bottom: 1rem;
 }
-#thankYouScreen p,
-.ms-closed-screen p {
+#thankYouScreen p {
   color: #5a5a6e;
   margin-bottom: 0.5rem;
-}
-.ms-closed-screen {
-  text-align: center;
-  padding: 2.5rem 1rem 1rem;
 }
 @media (max-width: 576px) {
   .ms-form-header {
@@ -133,10 +127,98 @@
         </div>
         <div class="ms-form-body">
           <h1>Motion Source Fall 2026 Internship Application</h1>
-          <div id="submissionsClosedScreen" class="ms-closed-screen">
-            <h2>Submissions Closed</h2>
-            <p>Thank you for your interest in the Motion Source Fall 2026 Internship Program.</p>
-            <p>Applications are no longer being accepted.</p>
+          <p id="formIntroText">
+            Please complete the application form below. Fields marked as required must be filled before submission.
+          </p>
+          <form id="internshipApplicationForm">
+            <div class="ms-section-title">Personal Information</div>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label" for="fullName">Full Name</label>
+                <input type="text" id="fullName" name="fullName" required class="form-control" />
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label" for="email">Email Address</label>
+                <input type="email" id="email" name="email" required class="form-control" />
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label" for="faculty">Faculty</label>
+                <input type="text" id="faculty" name="faculty" required class="form-control" />
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label" for="studentId">Student ID</label>
+                <input type="text" id="studentId" name="studentId" required class="form-control" />
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label" for="gpa">GPA</label>
+                <input type="number" step="0.01" min="0" max="10" id="gpa" name="gpa" required class="form-control" />
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label" for="phone">Phone Number</label>
+                <input type="tel" id="phone" name="phone" class="form-control" />
+              </div>
+            </div>
+
+            <div class="ms-section-title">Internship Details</div>
+            <div class="mb-3">
+              <label class="form-label" for="willingTwoMonths">
+                Are you willing to commit to working from 12:00 PM to 8:00 PM (12:00–20:00) CET?
+              </label>
+              <select id="willingTwoMonths" name="willingTwoMonths" required class="form-select">
+                <option value="">Select an option</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="internshipArea">Internship you are applying for:</label>
+              <select id="internshipArea" name="internshipArea" required class="form-select">
+                <option value="">Select an option</option>
+                <option value="Data Analysis">Dynamics 365 Business Central Development Internship</option>
+              </select>
+            </div>
+
+            <div class="ms-section-title">Attachments</div>
+            <div class="mb-3">
+              <label class="form-label" for="transcriptAttachment">
+                Please upload your Transcript of Records / list of completed exams and grades here:
+              </label>
+              <p class="form-text text-muted">Please attach a .pdf file.</p>
+              <input type="file" id="transcriptAttachment" name="transcriptAttachment" accept=".pdf,application/pdf" required class="form-control" />
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="internshipVideo">Video Introduction</label>
+              <p class="form-text text-muted">Please upload a 30–90 second video telling us:</p>
+              <ul class="form-text text-muted">
+                <li>why you would like to get the internship at Motion Source</li>
+                <li>what you expect from the internship</li>
+                <li>what excites you most about the opportunity</li>
+                <li>what you hope to learn during the internship</li>
+              </ul>
+              <p class="form-text text-muted">Please attach an .mp4 file.</p>
+              <input
+                type="file"
+                id="internshipVideo"
+                name="internshipVideo"
+                accept=".mp4,video/mp4"
+                required
+                class="form-control"
+              />
+            </div>
+
+            <div class="mt-4 text-center">
+              <button type="submit" class="ms-submit-btn">Submit Application</button>
+            </div>
+          </form>
+
+          <div id="thankYouScreen" style="display: none; text-align: center; padding: 40px;">
+            <h2>Thank you for your application!</h2>
+            <p>Your internship application has been submitted successfully.</p>
+            <p>We will review your information and contact you soon.</p>
           </div>
         </div>
         <div class="ms-orange-strip"></div>
@@ -146,3 +228,75 @@
   </div>
 </div>
 
+<script>
+document.getElementById("internshipApplicationForm").addEventListener("submit", async function (e) {
+  e.preventDefault();
+
+  const form = document.getElementById("internshipApplicationForm");
+  const thankYouScreen = document.getElementById("thankYouScreen");
+  const submitButton = form.querySelector("button[type='submit']");
+
+  const flowUrl =
+    "https://defaultdf0fc509acb44023b500fdf382dde4.30.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/647f954dcd68454ea4e0b11ac3bd37a6/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=iu3hOjM9jFItmu5-q2s4dKKAV0zg0K3o3h8HgIBbito";
+
+  async function fileToBase64(fileInputId) {
+    const file = document.getElementById(fileInputId).files[0];
+    if (!file) {
+      throw new Error("Missing file: " + fileInputId);
+    }
+
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        resolve({
+          fileName: file.name,
+          contentType: file.type,
+          fileContent: reader.result.split(",")[1]
+        });
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+
+  const payload = {
+    fullName: document.getElementById("fullName").value.trim(),
+    email: document.getElementById("email").value.trim(),
+    studentId: document.getElementById("studentId").value.trim(),
+    faculty: document.getElementById("faculty").value.trim(),
+    gpa: document.getElementById("gpa").value,
+    phone: document.getElementById("phone").value.trim(),
+    willingTwoMonths: document.getElementById("willingTwoMonths").value,
+    internshipArea: document.getElementById("internshipArea").value,
+    transcript: await fileToBase64("transcriptAttachment"),
+    video: await fileToBase64("internshipVideo")
+  };
+
+  submitButton.disabled = true;
+  submitButton.textContent = "Submitting...";
+
+  try {
+    const response = await fetch(flowUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+
+    if (response.ok) {
+      form.style.display = "none";
+      thankYouScreen.style.display = "block";
+      document.getElementById("formIntroText").style.display = "none";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      // window.location.href = "/thank-you";
+    } else {
+      alert("Something went wrong while submitting your application. Please try again.");
+      submitButton.disabled = false;
+      submitButton.textContent = "Submit Application";
+    }
+  } catch (error) {
+    alert("Submission failed. Please check your connection and try again.");
+    submitButton.disabled = false;
+    submitButton.textContent = "Submit Application";
+  }
+});
+</script>

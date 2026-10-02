@@ -222,21 +222,14 @@
   color: #dc3545;
 }
 
-#thankYouScreen h2,
-.ms-closed-screen h2 {
+#thankYouScreen h2 {
   color: #1a1a2e;
   margin-bottom: 1rem;
 }
 
-#thankYouScreen p,
-.ms-closed-screen p {
+#thankYouScreen p {
   color: #5a5a6e;
   margin-bottom: 0.5rem;
-}
-
-.ms-closed-screen {
-  text-align: center;
-  padding: 2.5rem 1rem 1rem;
 }
 
 @media (max-width: 576px) {
